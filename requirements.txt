@@ -1,0 +1,27 @@
+attrs==17.4.0
+certifi==2017.11.5
+chardet==3.0.4
+click==6.7
+configparser==3.5.0
+-e git+https://github.com/Runnerly/flakon.git@5b0b063843130066143bdbe6378ccf72acf5d521#egg=flakon
+Flask==0.12.2
+idna==2.6
+itsdangerous==0.24
+Jinja2==2.10
+jsonschema==2.6.0
+konfig==1.1
+MarkupSafe==1.0
+numpy==1.14.0
+pluggy==0.6.0
+py==1.5.2
+pytest==3.3.2
+PyYAML==3.12
+requests==2.18.4
+scikit-learn==0.19.1
+scipy==1.0.0
+six==1.11.0
+sklearn==0.0
+swagger-parser==1.0.0
+swagger-spec-validator==2.1.0
+urllib3==1.22
+Werkzeug==0.14.1
