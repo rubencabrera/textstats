@@ -1,17 +1,21 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+# Tools for managing data arrays
 from sklearn.feature_extraction.text import CountVectorizer
 import numpy as np
 from math import pi
 
+# Tools for web service, Flask is easy to set up and to scale:
 from flask import Flask, render_template, request
 from flask_wtf import FlaskForm
 from wtforms import TextAreaField
 
+# Tools for plotting
 from bokeh.plotting import figure
 from bokeh.embed import components
 
+# Flask app set up
 app = Flask(__name__)
 app.config.update(dict(
     SECRET_KEY='sdvflkjhsdfkjhsdf',
@@ -26,9 +30,7 @@ class TextForm(FlaskForm):
     # Should have some validation!
     the_text = TextAreaField(
         'Text to analyze',
-        # validators=[DataRequired()]
     )
-    # submit = SubmitField()
 
 
 def analyze_text(text):
@@ -49,7 +51,7 @@ def analyze_text(text):
     statistics = {}
     # Char length
     statistics['length'] = len(text)
-    # word count, very rough ignore punctuation, just spaces:
+    # word count, very basic. Ignore punctuation, just spaces:
     statistics['word_count'] = len(text.replace('\n', ' ').split(' '))
 
     statistics['no_spaces_chars'] = len(list(text.replace(' ', '')))
@@ -75,10 +77,10 @@ def analyze_text(text):
 @app.route('/form', methods=['GET', 'POST'])
 def manual_input():
     form = TextForm()
-    # if form.validate_on_submit():
     if request.method == 'POST':
         text = request.form['the_text']
         results = analyze_text(text)
+        # Char count plot settings
         ccount = figure(
             title="Character count",
             x_range=results.get('unique_chars'),
@@ -88,6 +90,7 @@ def manual_input():
             top=results.get('char_counts'),
             width=0.4,
         )
+        # Word count plot settings
         wcount = figure(
             title="Word count",
             x_range=results.get('bag_of_words'),
@@ -111,18 +114,19 @@ def manual_input():
                                 wc=results.get('word_count'),
                                 nsc=results.get('no_spaces_chars'),
                                 mostf=results.get('most_frequent'),
-                                # sw=results.get('significant_words'),
                                 script=comp,
                                 div=div,
                             )
     return render_template('form.html', form=form)
 
 
-# @app.route('/results')
-# def result():
-    # return render_template('results.html')
-
-
 @app.route('/')
 def index():
+    """
+    This is a sample to test the app
+    """
     return str(analyze_text('Hello world!'))
+
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=5000)
