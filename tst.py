@@ -1,16 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import argparse
 from sklearn.feature_extraction.text import CountVectorizer
-from pprint import pprint
 import numpy as np
 
-parser = argparse.ArgumentParser(
-    description='Get some text and return some statistics')
-parser.add_argument('--text', metavar='TEXT', help='Text to analyze')
-parser.add_argument('--file', metavar='FILE', type=open, help='Text file')
-args = parser.parse_args()
+from flask import Flask
+
+app = Flask(__name__)
 
 
 def analyze_text(text):
@@ -51,11 +47,9 @@ def analyze_text(text):
     statistics['max_frequence'] = occurence_vector.toarray(
                                   )[0, occurence_vector.toarray().argmax()]
 
-    # TODO:
-
     return statistics
 
 
-if __name__ == "__main__":
-    text_to_analyze = args.file.read() or args.text
-    pprint(analyze_text(text_to_analyze))
+@app.route('/')
+def index():
+    return str(analyze_text('Hello world!'))
