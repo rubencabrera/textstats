@@ -4,9 +4,28 @@
 from sklearn.feature_extraction.text import CountVectorizer
 import numpy as np
 
-from flask import Flask
+from flask import Flask, render_template, request
+from flask_wtf import FlaskForm
+from wtforms import TextAreaField
+# from wtforms import DataRequired
 
 app = Flask(__name__)
+app.config.update(dict(
+    SECRET_KEY='sdvflkjhsdfkjhsdf',
+    WTF_CSRF_SECRET_KEY='sdfkjhsdfkjhsdf'
+))
+
+
+class TextForm(FlaskForm):
+    """
+    A form to input text using FlaskForm
+    """
+    # Should have some validation!
+    the_text = TextAreaField(
+        'Text to analyze',
+        # validators=[DataRequired()]
+    )
+    # submit = SubmitField()
 
 
 def analyze_text(text):
@@ -48,6 +67,22 @@ def analyze_text(text):
                                   )[0, occurence_vector.toarray().argmax()]
 
     return statistics
+
+
+@app.route('/form', methods=['GET', 'POST'])
+def manual_input():
+    form = TextForm()
+    # if form.validate_on_submit():
+    if request.method == 'POST':
+        print("Valid")
+        text = request.form['the_text']
+        return render_template('results.html', results=analyze_text(text))
+    return render_template('form.html', form=form)
+
+
+# @app.route('/results')
+# def result():
+    # return render_template('results.html')
 
 
 @app.route('/')
