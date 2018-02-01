@@ -5,6 +5,7 @@ click==6.7
 configparser==3.5.0
 -e git+https://github.com/Runnerly/flakon.git@5b0b063843130066143bdbe6378ccf72acf5d521#egg=flakon
 Flask==0.12.2
+Flask-WTF==0.14.2
 idna==2.6
 itsdangerous==0.24
 Jinja2==2.10
@@ -25,3 +26,4 @@ swagger-parser==1.0.0
 swagger-spec-validator==2.1.0
 urllib3==1.22
 Werkzeug==0.14.1
+WTForms==2.1
