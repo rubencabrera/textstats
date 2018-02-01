@@ -1,3 +1,23 @@
 <!doctype html>
-<title>Text analysis results</title>
-<div> {{ results }}</div>
+<html>
+<head>
+    <title>Text analysis results</title>
+    <link
+        href="https://cdn.pydata.org/bokeh/release/bokeh-0.12.13.min.css"
+        rel="stylesheet" type="text/css">
+    <link
+        href="https://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.13.min.css"
+        rel="stylesheet" type="text/css">
+    <link href="https://cdn.pydata.org/bokeh/release/bokeh-tables-0.12.13.min.css"
+        rel="stylesheet" type="text/css">
+
+    <script src="https://cdn.pydata.org/bokeh/release/bokeh-0.12.13.min.js"></script>
+    <script src="https://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.13.min.js"></script>
+    <script src="https://cdn.pydata.org/bokeh/release/bokeh-tables-0.12.13.min.js"></script>
+    {{ script|safe }}
+</head>
+<body>
+        {{ mf|safe }}
+        {{ div|safe }}
+</body>
+</html>
