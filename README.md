@@ -51,11 +51,17 @@ graph. Characters like line breaks and spaces do the same on character count.
 Bar graphs are useful, but don't keep users' attention for very long. Word
 clouds seem to work way better, but take some more time to develop. 
 
+The use of well known and tested frameworks speeds development and keeps us
+safe from repeating unnecessary tasks. Learning them has made this development
+longer than expected. They also mean a very big overhead when it comes to the
+size of this project. Ease of development might justify it, but could become
+a big trouble if scaling is a goal.
+
+
 Problems may arise from:
 ------------------------
 
++ Large texts might cause the graphs not to render on the browser, although the
+  data is analyzed quite fast.
 + Non standard encodings, like Windows specific charsets and line breaks.
 + Insecure or non trusted users.
-
-
-
