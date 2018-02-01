@@ -3,6 +3,7 @@
 
 from sklearn.feature_extraction.text import CountVectorizer
 import numpy as np
+from math import pi
 
 from flask import Flask, render_template, request
 from flask_wtf import FlaskForm
@@ -78,18 +79,32 @@ def manual_input():
     if request.method == 'POST':
         text = request.form['the_text']
         results = analyze_text(text)
-        # Things to plot:
-        # occurrence_array
-        # unique_chars,char_counts
-        plot = figure(title="Simple figure")
-        plot.vbar(
+        ccount = figure(
+            title="Character count",
+            x_range=results.get('unique_chars'),
+        )
+        ccount.vbar(
             x=[index for index, count in enumerate(results.get('char_counts'))],
-            top=results.get('char_counts'), width=0.4)
-        print(results.get('char_counts'))
-        print(results.get('unique_chars'))
-        print(type(results.get('char_counts')))
+            top=results.get('char_counts'),
+            width=0.4,
+        )
+        wcount = figure(
+            title="Word count",
+            x_range=results.get('bag_of_words'),
+        )
+        print(results.get('occurrence_array'))
+        wcount.vbar(
+            x=[index
+               for index, count in enumerate(
+                                    results.get('occurrence_array')[0])
+               ],
+            top=results.get('occurrence_array')[0],
+            width=0.4,
+        )
+        wcount.xaxis.major_label_orientation = pi/2
+        print(results.get('occurrence_array'))
+        plot = (ccount, wcount)
         comp, div = components(plot)
-        print(plot)
         return render_template(
                                 'results.html',
                                 mf=results.get('max_frequence'),

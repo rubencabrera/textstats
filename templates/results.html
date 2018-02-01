@@ -17,7 +17,16 @@
     {{ script|safe }}
 </head>
 <body>
-        {{ mf|safe }}
+    <p>
+    Most frequent word: {{ mostf|safe }}  ({{ mf|safe }} instances)
+    </br>
+    Number of words: {{ wc|safe }}
+    </br>
+    Characters (without spaces): {{ nsc|safe }}
+    </br>
+    </p>
+    <div>
         {{ div|safe }}
+    </div>
 </body>
 </html>
