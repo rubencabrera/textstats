@@ -7,7 +7,9 @@ import numpy as np
 from flask import Flask, render_template, request
 from flask_wtf import FlaskForm
 from wtforms import TextAreaField
-# from wtforms import DataRequired
+
+from bokeh.plotting import figure
+from bokeh.embed import components
 
 app = Flask(__name__)
 app.config.update(dict(
@@ -74,9 +76,30 @@ def manual_input():
     form = TextForm()
     # if form.validate_on_submit():
     if request.method == 'POST':
-        print("Valid")
         text = request.form['the_text']
-        return render_template('results.html', results=analyze_text(text))
+        results = analyze_text(text)
+        # Things to plot:
+        # occurrence_array
+        # unique_chars,char_counts
+        plot = figure(title="Simple figure")
+        plot.vbar(
+            x=[index for index, count in enumerate(results.get('char_counts'))],
+            top=results.get('char_counts'), width=0.4)
+        print(results.get('char_counts'))
+        print(results.get('unique_chars'))
+        print(type(results.get('char_counts')))
+        comp, div = components(plot)
+        print(plot)
+        return render_template(
+                                'results.html',
+                                mf=results.get('max_frequence'),
+                                wc=results.get('word_count'),
+                                nsc=results.get('no_spaces_chars'),
+                                mostf=results.get('most_frequent'),
+                                # sw=results.get('significant_words'),
+                                script=comp,
+                                div=div,
+                            )
     return render_template('form.html', form=form)
 
 
